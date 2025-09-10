@@ -1,6 +1,7 @@
 package com.example.listycity;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -53,12 +54,14 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 Toast.makeText(this, "City already exists or is empty", Toast.LENGTH_SHORT).show();
             }
+
         });
 
         // Select city
         cityList.setOnItemClickListener((parent, view, position, id) -> {
             selectedCity = dataList.get(position);
             cityList.setItemChecked(position, true);
+            deleteButton.setVisibility(View.VISIBLE);
         });
 
         // Delete city
@@ -68,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
                 selectedCity = null;
                 cityList.clearChoices();
+                deleteButton.setEnabled(false);
             } else {
                 Toast.makeText(this, "No city selected", Toast.LENGTH_SHORT).show();
             }
