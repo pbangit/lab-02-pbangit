@@ -6,15 +6,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- Input for new city -->
     <EditText
         android:id="@+id/inputCity"
         android:hint="Enter City"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
+    <!-- Add City Button -->
     <Button
         android:id="@+id/addButton"
         android:text="Add City"
@@ -24,9 +27,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
+    <!-- Confirm Button -->
     <Button
-        android:id="@+id/deleteCity"
-        android:text="Delete City"
+        android:id="@+id/confirmButton"
+        android:text="CONFIRM"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:visibility="gone"
@@ -34,6 +38,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
+    <!-- Delete Button -->
+    <Button
+        android:id="@+id/deleteCity"
+        android:text="Delete City"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/confirmButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <!-- ListView fills remaining space -->
     <ListView
         android:id="@+id/city_list"
         android:layout_width="0dp"

@@ -6,7 +6,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,65 +14,76 @@ import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
 
-    // Class-level variables
-    private ListView cityList;
     private EditText inputCity;
     private Button addButton;
+    private Button confirmButton;
     private Button deleteButton;
-    private ArrayAdapter<String> adapter;
+    private ListView cityList;
+
     private ArrayList<String> dataList;
-    private String selectedCity = null;
+    private ArrayAdapter<String> adapter;
+    private String selectedCity = null; // currently selected city
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Initialize views AFTER setContentView
-        cityList = findViewById(R.id.city_list); // match XML id
+        // Initialize views
         inputCity = findViewById(R.id.inputCity);
         addButton = findViewById(R.id.addButton);
+        confirmButton = findViewById(R.id.confirmButton);
         deleteButton = findViewById(R.id.deleteCity);
+        cityList = findViewById(R.id.city_list);
 
-        // Initialize data
+        // Initial data
         String[] cities = {"Toronto", "Vancouver", "Calgary", "Montreal", "Edmonton"};
         dataList = new ArrayList<>(Arrays.asList(cities));
 
-        // Initialize adapter
+        // Adapter
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_activated_1, dataList);
         cityList.setAdapter(adapter);
         cityList.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
-        // Add city
+        // Initially hide input and confirm
+        inputCity.setVisibility(View.GONE);
+        confirmButton.setVisibility(View.GONE);
+        deleteButton.setVisibility(View.GONE);
+
+        // Handle selecting a city
+        cityList.setOnItemClickListener((parent, view, position, id) -> {
+            selectedCity = dataList.get(position);
+            cityList.setItemChecked(position, true); // highlight selected row
+            deleteButton.setVisibility(View.VISIBLE); // show delete button
+        });
+
+        // Show input + confirm when Add City is clicked
         addButton.setOnClickListener(v -> {
+            inputCity.setVisibility(View.VISIBLE);
+            confirmButton.setVisibility(View.VISIBLE);
+            inputCity.requestFocus();
+        });
+
+        // Confirm adding new city
+        confirmButton.setOnClickListener(v -> {
             String newCity = inputCity.getText().toString().trim();
             if (!newCity.isEmpty() && !dataList.contains(newCity)) {
                 dataList.add(newCity);
                 adapter.notifyDataSetChanged();
                 inputCity.setText("");
-            } else {
-                Toast.makeText(this, "City already exists or is empty", Toast.LENGTH_SHORT).show();
+                inputCity.setVisibility(View.GONE);
+                confirmButton.setVisibility(View.GONE);
             }
-
         });
 
-        // Select city
-        cityList.setOnItemClickListener((parent, view, position, id) -> {
-            selectedCity = dataList.get(position);
-            cityList.setItemChecked(position, true);
-            deleteButton.setVisibility(View.VISIBLE);
-        });
-
-        // Delete city
+        // Delete selected city
         deleteButton.setOnClickListener(v -> {
             if (selectedCity != null) {
                 dataList.remove(selectedCity);
                 adapter.notifyDataSetChanged();
                 selectedCity = null;
+                deleteButton.setVisibility(View.GONE);
                 cityList.clearChoices();
-                deleteButton.setEnabled(false);
-            } else {
-                Toast.makeText(this, "No city selected", Toast.LENGTH_SHORT).show();
             }
         });
     }
