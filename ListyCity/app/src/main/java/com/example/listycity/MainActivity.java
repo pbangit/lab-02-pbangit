@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         cityList = findViewById(R.id.city_list);
 
         // Initial data
-        String[] cities = {"Toronto", "Vancouver", "Calgary", "Montreal", "Edmonton"};
+        String[] cities = {"Edmonton", "Vancouver", "Moscow", "Sydney", "Berlin", "Vienna", "Tokyo", "Beijing","Osaka", "New Delhi"};
         dataList = new ArrayList<>(Arrays.asList(cities));
 
         // Adapter
@@ -45,10 +45,10 @@ public class MainActivity extends AppCompatActivity {
         cityList.setAdapter(adapter);
         cityList.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
-        // Initially hide input and confirm
-        inputCity.setVisibility(View.GONE);
+
+        inputCity.setVisibility(View.VISIBLE);
         confirmButton.setVisibility(View.GONE);
-        deleteButton.setVisibility(View.GONE);
+        deleteButton.setVisibility(View.VISIBLE);
 
         // Handle selecting a city
         cityList.setOnItemClickListener((parent, view, position, id) -> {
@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
                 dataList.add(newCity);
                 adapter.notifyDataSetChanged();
                 inputCity.setText("");
-                inputCity.setVisibility(View.GONE);
+                inputCity.setVisibility(View.VISIBLE);
                 confirmButton.setVisibility(View.GONE);
             }
         });
@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
                 dataList.remove(selectedCity);
                 adapter.notifyDataSetChanged();
                 selectedCity = null;
-                deleteButton.setVisibility(View.GONE);
+                deleteButton.setVisibility(View.VISIBLE);
                 cityList.clearChoices();
             }
         });
