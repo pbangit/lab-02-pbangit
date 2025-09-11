@@ -22,25 +22,24 @@ public class MainActivity extends AppCompatActivity {
 
     private ArrayList<String> dataList;
     private ArrayAdapter<String> adapter;
-    private String selectedCity = null; // currently selected city
+    private String selectedCity = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Initialize views
         inputCity = findViewById(R.id.inputCity);
         addButton = findViewById(R.id.addButton);
         confirmButton = findViewById(R.id.confirmButton);
         deleteButton = findViewById(R.id.deleteCity);
         cityList = findViewById(R.id.city_list);
 
-        // Initial data
+
         String[] cities = {"Edmonton", "Vancouver", "Moscow", "Sydney", "Berlin", "Vienna", "Tokyo", "Beijing","Osaka", "New Delhi"};
         dataList = new ArrayList<>(Arrays.asList(cities));
 
-        // Adapter
+
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_activated_1, dataList);
         cityList.setAdapter(adapter);
         cityList.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
@@ -50,21 +49,21 @@ public class MainActivity extends AppCompatActivity {
         confirmButton.setVisibility(View.GONE);
         deleteButton.setVisibility(View.VISIBLE);
 
-        // Handle selecting a city
+
         cityList.setOnItemClickListener((parent, view, position, id) -> {
             selectedCity = dataList.get(position);
             cityList.setItemChecked(position, true); // highlight selected row
             deleteButton.setVisibility(View.VISIBLE); // show delete button
         });
 
-        // Show input + confirm when Add City is clicked
+
         addButton.setOnClickListener(v -> {
             inputCity.setVisibility(View.VISIBLE);
             confirmButton.setVisibility(View.VISIBLE);
             inputCity.requestFocus();
         });
 
-        // Confirm adding new city
+
         confirmButton.setOnClickListener(v -> {
             String newCity = inputCity.getText().toString().trim();
             if (!newCity.isEmpty() && !dataList.contains(newCity)) {
@@ -76,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Delete selected city
+
         deleteButton.setOnClickListener(v -> {
             if (selectedCity != null) {
                 dataList.remove(selectedCity);
