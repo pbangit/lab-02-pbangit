@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         cityList.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
 
-        inputCity.setVisibility(View.VISIBLE);
+        inputCity.setVisibility(View.GONE);
         confirmButton.setVisibility(View.GONE);
         deleteButton.setVisibility(View.VISIBLE);
 
@@ -53,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
         cityList.setOnItemClickListener((parent, view, position, id) -> {
             selectedCity = dataList.get(position);
             cityList.setItemChecked(position, true); // highlight selected row
-            deleteButton.setVisibility(View.VISIBLE); // show delete button
         });
 
 
@@ -70,8 +69,8 @@ public class MainActivity extends AppCompatActivity {
                 dataList.add(newCity);
                 adapter.notifyDataSetChanged();
                 inputCity.setText("");
-                inputCity.setVisibility(View.VISIBLE);
                 confirmButton.setVisibility(View.GONE);
+                inputCity.setVisibility(View.GONE);
             }
         });
 
@@ -81,7 +80,6 @@ public class MainActivity extends AppCompatActivity {
                 dataList.remove(selectedCity);
                 adapter.notifyDataSetChanged();
                 selectedCity = null;
-                deleteButton.setVisibility(View.VISIBLE);
                 cityList.clearChoices();
             }
         });
